@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<head>
+    <title>list</title>
+</head>
+<body>
+    <h1>list</h1>
+    {% if object_list %}
+    <ul>
+        {% for name in object_list %}
+        <li>{{ name }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>no item</p>
+    {% endif %}
+    <a href={% url "app:hello" %}>go back to home</a>
+</body>
+</html>
