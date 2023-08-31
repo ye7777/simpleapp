@@ -1,0 +1,10 @@
+server {
+	server_name 43.207.98.46;
+	root /home/ubuntu/;
+	location / {
+		proxy_pass https://unix:/rungunicorn/socket;
+	}
+	location /static/ {
+		alias /home/ubuntu/static/;
+	}
+}
