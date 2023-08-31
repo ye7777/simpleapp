@@ -1,0 +1,12 @@
+
+[Unit]
+# socketファイルの説明
+Description=gunicorn socket
+ 
+[Socket]
+# serviceファイルのポート番号を指定（今回はsockファイルを指定）
+ListenStream=/var/run/config.sock
+ 
+[Install]
+# 必ず「sockets.target」を指定
+WantedBy=sockets.target

@@ -1,0 +1,23 @@
+[Unit]
+# serviceファイルの説明
+Description=gunicorn daemon
+ 
+# serviceファイルの起動時に、socketファイルの起動を要求
+Requires=config.socket
+ 
+# 必ず「network.target」を指定
+After=network.target
+ 
+[Service]
+# Djangoプロジェクトを指定（manage.pyがあるディレクトリ）
+WorkingDirectory=/home/ubuntu/simpleapp
+ 
+# 通信開始時に起動するコマンドを設定
+# 先ほど調べたgunicornコマンドのパスを使用
+ExecStart=/home/ubuntu/.local/share/virtualenvs/simpleapp-OXg2uGJU/bin/gunicorn --config /etc/gunicorn/gunicorn.conf.py config.wsgi:application
+ 
+Restart=always
+ 
+[Install]
+# 必ず「multi-user.target]を指定
+WantedBy=multi-user.target

@@ -1,0 +1,24 @@
+server {
+        # 設定しているウェブサイトへのリクエストを通すポート
+        listen 80;
+        # ウェブサイトのIPもしくはドメイン名
+        # EIPを設定しいない場合は, localhost と設定
+        server_name 13.113.193.148;
+        # ファビコンが見つからないというエラーを回避するおまじない
+        location = /favicon.ico {access_log off; log_not_found off;}
+        ### 以下、リクエストURLとNGINX上のパスとの対応を定義
+        # Django静的ファイルへのパスを設定
+        location /static/ {
+                root /var/www;
+        }
+ 
+        # リクエストをウェブページに流すためにunixソケットへのパスを設定
+        location / {
+                # djangapp.sockにリクエスト結果を流している
+                proxy_pass http://unix:/var/run/config.sock;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+                proxy_redirect off;
+                proxy_set_header X-Forwarded-Proto $scheme;
+        }
+}
